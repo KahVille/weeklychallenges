@@ -1,12 +1,18 @@
 # weeklychallenges
 My solutions for the Weekly Challenge series from IAMTimCorey. For me the purpose of this challenge is to develop as a programmer.
 
-The challenge playlist can be found [here](https://www.youtube.com/playlist?list=PLLWMQd6PeGY1VcJGocm1wwtFCZUrh2sc9 "IAMTimCorey Weekly Challenges")
+### Project Management
+
+You can find up-to-date project management kanbanboard here:
+[Trello Kanbanboard](https://trello.com/b/6TjhAexI/weeklychallenges)
 
 The master branch contains ready made solutions for the individual challenges.
 Checkout the development branch for the solutions that are currently in progress.
 
-## Challenge List:
+### Challenge Playlist
+The challenge playlist can be found [here](https://www.youtube.com/playlist?list=PLLWMQd6PeGY1VcJGocm1wwtFCZUrh2sc9 "IAMTimCorey Weekly Challenges")
+
+## Challenges completed:
 
 - [ ] ForEach challenge
 - [ ] TextFiles  challenge
