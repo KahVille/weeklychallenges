@@ -1,6 +1,7 @@
 # weeklychallenges
-My solutions for the Weekly Challenge series from IAMTimCorey
-the challenge playlist can be found [here](https://www.youtube.com/playlist?list=PLLWMQd6PeGY1VcJGocm1wwtFCZUrh2sc9 "IAMTimCorey Weekly Challenges")
+My solutions for the Weekly Challenge series from IAMTimCorey.
+
+The challenge playlist can be found [here](https://www.youtube.com/playlist?list=PLLWMQd6PeGY1VcJGocm1wwtFCZUrh2sc9 "IAMTimCorey Weekly Challenges")
 
 The master branch contains ready made solutions for the individuual challenges.
 Checkout the development branch for the solutions that are currently in progress.
