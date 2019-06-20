@@ -1,5 +1,5 @@
 # weeklychallenges
-My solutions for the Weekly Challenge series from IAMTimCorey.
+My solutions for the Weekly Challenge series from IAMTimCorey. For me the purpose of this challenge is to develop as a programmer.
 
 The challenge playlist can be found [here](https://www.youtube.com/playlist?list=PLLWMQd6PeGY1VcJGocm1wwtFCZUrh2sc9 "IAMTimCorey Weekly Challenges")
 
