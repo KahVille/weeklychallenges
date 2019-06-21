@@ -23,7 +23,7 @@ namespace ForEachChallenge
 
             foreach (string name in nameList)
             {
-                Console.WriteLine(name);
+                Console.WriteLine($"{name}");
             }
 
 
@@ -39,7 +39,7 @@ namespace ForEachChallenge
 
             foreach(Person person in peopleList)
             {
-                Console.WriteLine("Hello, My name is " + person.Name);
+                Console.WriteLine($"Hello, My name is {person.Name}");
             }
 
 
