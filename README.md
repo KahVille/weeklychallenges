@@ -14,7 +14,8 @@ The challenge playlist can be found [here](https://www.youtube.com/playlist?list
 
 ## Challenges completed:
 
-- [ ] ForEach challenge
+- [X] ForEach challenge
+
 - [ ] TextFiles  challenge
 - [ ] ErrorHandling  challenge
 - [ ] Refactoring  challenge
