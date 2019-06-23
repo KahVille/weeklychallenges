@@ -90,13 +90,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="AdvancedDataSet.csv" />
+    <EmbeddedResource Include="AdvancedDataSet.csv" />
     <None Include="docs\Instructions.md" />
+    <None Include="docs\References.md" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="StandardDataSet.csv" />
+    <EmbeddedResource Include="StandardDataSet.csv" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
