@@ -1,22 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Linq;
 
 namespace TextFilesChallenge
 {
@@ -26,8 +14,8 @@ namespace TextFilesChallenge
     public partial class MainWindow : Window
     {
         private readonly ObservableCollection<UserModel> userDataList = null;
-        private string[] fieldNames;
         private readonly string fileToLoad = "AdvancedDataSet.csv";
+        FileParser fileParser = new FileParser();
 
         public MainWindow()
         {
@@ -41,62 +29,20 @@ namespace TextFilesChallenge
 
         }
 
-
         private ObservableCollection<UserModel> SetUpUserDataList(string fileName = null)
         {
-            return ParseDataSetFile(fileName);
-        }
 
-        private ObservableCollection<UserModel> ParseDataSetFile(string filename = null)
-        {
-
+            var filedata = fileParser.ParseDataSetFile(fileName);
             ObservableCollection<UserModel> userList = new ObservableCollection<UserModel>();
 
-            List<string> fileData = File.ReadAllLines(filename).ToList();
 
-            fieldNames = fileData[0].Split(',');
-
-
-            foreach (var item in fileData.Skip(1))
+            foreach (var data in filedata.data)
             {
-                string[] dataValues = item.Split(',');
-
                 UserModel newUserData = new UserModel();
-
-                for (int jindex = 0; jindex < dataValues.Length; jindex++)
-                {
-                    PropertyInfo propertyInfo = newUserData.GetType().GetProperty(fieldNames[jindex]);
-                    //var converter = TypeDescriptor.GetConverter(propertyInfo.PropertyType);
-                    string valueToCheck = dataValues[jindex];
-
-                    SetDataValue(propertyInfo, newUserData, valueToCheck);
-                }
+                newUserData.AssignDataValues(data, filedata.fieldNames);
                 userList.Add(newUserData);
-
             }
             return userList;
-        }
-
-        private void SetDataValue(PropertyInfo propertyInfo, UserModel newUserData, string dataValue)
-        {
-            var converter = TypeDescriptor.GetConverter(propertyInfo.PropertyType);
-
-            //from string to boolean special case
-            if (propertyInfo.PropertyType == typeof(bool))
-            {
-                int number;
-                bool success = int.TryParse(dataValue, out number);
-                if (success)
-                {
-                    bool booleanValue = (number == 1) ? true : false;
-                    propertyInfo.SetValue(newUserData, booleanValue, null);
-                }
-            }
-            else
-            {
-                var result = converter.ConvertFrom(dataValue);
-                propertyInfo.SetValue(newUserData, result, null);
-            }
         }
 
         private void AddUserButton_Click(object sender, RoutedEventArgs e)
@@ -126,47 +72,7 @@ namespace TextFilesChallenge
         private void SaveList(string fileName = null)
         {
 
-            //get file location
-            // write to list
-            // format data
-            //write file to disk
-
-            List<string> fileoutput = new List<string>();
-            char[] unwantedChars = { ',' };
-
-            string dataFieldNames = "";
-            foreach (var dataField in fieldNames)
-            {
-                dataFieldNames += $"{dataField},";
-            }
-
-
-            string dataFields = dataFieldNames.TrimEnd(unwantedChars);
-
-            fileoutput.Add(dataFields);
-
-            foreach (UserModel user in userDataList)
-            {
-
-                string userDataString = "";
-                for (int index = 0; index < fieldNames.Length; index++)
-                {
-
-                    if (user.GetType().GetProperty(fieldNames[index]).PropertyType == typeof(bool))
-                    {
-                        int numberFormat = (user.IsAlive == false) ? 0 : 1;
-                        userDataString += $"{numberFormat},";
-
-                    }
-                    else
-                    {
-                        userDataString += $"{user.GetType().GetProperty(fieldNames[index]).GetValue(user)},";
-                    }
-                }
-                string userData = userDataString.TrimEnd(unwantedChars);
-                fileoutput.Add(userData);
-            }
-            File.WriteAllLines(fileName, fileoutput);
+            fileParser.SaveDataFile(fileName, userDataList.ToList());
         }
 
         private void UserDataListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
