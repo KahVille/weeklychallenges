@@ -16,7 +16,8 @@ The challenge playlist can be found [here](https://www.youtube.com/playlist?list
 
 - [X] ForEach challenge
 
-- [ ] TextFiles  challenge
+- [X] TextFiles  challenge
+
 - [ ] ErrorHandling  challenge
 - [ ] Refactoring  challenge
 - [ ] ConfigFile  challenge
