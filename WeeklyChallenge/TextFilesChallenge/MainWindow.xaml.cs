@@ -21,7 +21,6 @@ namespace TextFilesChallenge
         {
             InitializeComponent();
 
-
             userDataList = SetUpUserDataList(fileToLoad);
             //assigns the list and sets display data provided from function.
             UserDataListBox.ItemsSource = userDataList;
@@ -58,7 +57,7 @@ namespace TextFilesChallenge
                 {
                     FirstName = FirstNameTextBox.Text,
                     LastName = LastNameTextBox.Text,
-                    Age = Convert.ToInt32(AgeTextBox.Text),
+                    Age = (int.TryParse(AgeTextBox.Text, out int parsedAge)) ? parsedAge : 0,
                     IsAlive = (bool)(IsAliveCheckBox.IsChecked) ? true : false
                 });
 
@@ -71,33 +70,7 @@ namespace TextFilesChallenge
 
         private void SaveList(string fileName = null)
         {
-
             fileParser.SaveDataFile(fileName, userDataList.ToList());
-        }
-
-        private void UserDataListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void FirstNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void LastNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void AgeTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void IsAliveCheckBox_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 
