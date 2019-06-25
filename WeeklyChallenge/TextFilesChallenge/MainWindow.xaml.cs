@@ -27,7 +27,7 @@ namespace TextFilesChallenge
     {
         private readonly ObservableCollection<UserModel> userDataList = null;
         private string[] fieldNames;
-        private readonly string fileToLoad = "StandardDataSet.csv";
+        private readonly string fileToLoad = "AdvancedDataSet.csv";
 
         public MainWindow()
         {
@@ -53,6 +53,7 @@ namespace TextFilesChallenge
             ObservableCollection<UserModel> userList = new ObservableCollection<UserModel>();
 
             List<string> fileData = File.ReadAllLines(filename).ToList();
+
             fieldNames = fileData[0].Split(',');
 
 
@@ -65,7 +66,7 @@ namespace TextFilesChallenge
                 for (int jindex = 0; jindex < dataValues.Length; jindex++)
                 {
                     PropertyInfo propertyInfo = newUserData.GetType().GetProperty(fieldNames[jindex]);
-                    var converter = TypeDescriptor.GetConverter(propertyInfo.PropertyType);
+                    //var converter = TypeDescriptor.GetConverter(propertyInfo.PropertyType);
                     string valueToCheck = dataValues[jindex];
 
                     SetDataValue(propertyInfo, newUserData, valueToCheck);
@@ -83,10 +84,13 @@ namespace TextFilesChallenge
             //from string to boolean special case
             if (propertyInfo.PropertyType == typeof(bool))
             {
-                int number = int.Parse(dataValue);
-                bool booleanValue = (number == 1) ? true: false;
-
-                propertyInfo.SetValue(newUserData, booleanValue, null);
+                int number;
+                bool success = int.TryParse(dataValue, out number);
+                if (success)
+                {
+                    bool booleanValue = (number == 1) ? true : false;
+                    propertyInfo.SetValue(newUserData, booleanValue, null);
+                }
             }
             else
             {
@@ -121,35 +125,48 @@ namespace TextFilesChallenge
 
         private void SaveList(string fileName = null)
         {
-           
-            //get file location, resource name
-            // open write stream
-            // format data for the stream
-            // write to stream
+
+            //get file location
+            // write to list
+            // format data
             //write file to disk
 
-                //resource.CopyTo(file);
-                string userDataString = "";
-                foreach (UserModel user in userDataList)
-                    {
-                    
-                    //    //PropertyInfo propertyInfo = user.GetType().GetProperty(fieldNames[0]);
+            List<string> fileoutput = new List<string>();
+            char[] unwantedChars = { ',' };
 
-                    //    //List<string> propertyWrteOrder = new List<string>();
-                    for (int index = 0; index < fieldNames.Length; index++)
-                        {
-                            if (index == fieldNames.Length - 1)
-                            {
-                                userDataString += $"{user.GetType().GetProperty(fieldNames[index]).GetValue(user)}";
-                            }
-                            else
-                            {
-                                userDataString += $"{user.GetType().GetProperty(fieldNames[index]).GetValue(user)},";
-                            }
-                        }
-                    userDataString += '\n';
+            string dataFieldNames = "";
+            foreach (var dataField in fieldNames)
+            {
+                dataFieldNames += $"{dataField},";
+            }
+
+
+            string dataFields = dataFieldNames.TrimEnd(unwantedChars);
+
+            fileoutput.Add(dataFields);
+
+            foreach (UserModel user in userDataList)
+            {
+
+                string userDataString = "";
+                for (int index = 0; index < fieldNames.Length; index++)
+                {
+
+                    if (user.GetType().GetProperty(fieldNames[index]).PropertyType == typeof(bool))
+                    {
+                        int numberFormat = (user.IsAlive == false) ? 0 : 1;
+                        userDataString += $"{numberFormat},";
+
+                    }
+                    else
+                    {
+                        userDataString += $"{user.GetType().GetProperty(fieldNames[index]).GetValue(user)},";
+                    }
                 }
-            //File.WriteAllText(fileName, fieldNameString + '\n' + userDataString);
+                string userData = userDataString.TrimEnd(unwantedChars);
+                fileoutput.Add(userData);
+            }
+            File.WriteAllLines(fileName, fileoutput);
         }
 
         private void UserDataListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
