@@ -41,6 +41,7 @@ namespace TextFilesChallenge
 
         }
 
+
         private ObservableCollection<UserModel> SetUpUserDataList(string fileName = null)
         {
             return ParseDataSetFile(fileName);
@@ -108,7 +109,7 @@ namespace TextFilesChallenge
                     FirstName = FirstNameTextBox.Text,
                     LastName = LastNameTextBox.Text,
                     Age = Convert.ToInt32(AgeTextBox.Text),
-                    IsAlive = IsAliveCheckBox.IsEnabled
+                    IsAlive = (bool)(IsAliveCheckBox.IsChecked) ? true : false
                 });
 
         }
